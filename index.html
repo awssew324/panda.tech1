@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>موقع باندا التقني</title>
+
+
+  <style>
+    :root{
+      --bg:#070a12;
+      --bg2:#0b1020;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.10);
+      --stroke:rgba(255,255,255,.12);
+      --text:#eaf2ff;
+      --muted:rgba(234,242,255,.74);
+      --gold:#f7c45e;
+      --cyan:#46f0ff;
+      --blue:#4d7cff;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 16px;
+      --max: 1120px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 20% 10%, rgba(70,240,255,.12), transparent 55%),
+                  radial-gradient(1100px 700px at 80% 20%, rgba(77,124,255,.18), transparent 55%),
+                  linear-gradient(180deg, var(--bg), var(--bg2) 55%, #070913);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    /* خلفية زخرفية متحركة */
+    .glow-orb{
+      position:fixed;
+      inset:auto;
+      width:520px; height:520px;
+      border-radius:50%;
+      filter: blur(40px);
+      opacity:.35;
+      pointer-events:none;
+      z-index:0;
+      animation: floaty 10s ease-in-out infinite;
+    }
+    .orb-a{ top:-180px; right:-190px; background: radial-gradient(circle at 30% 30%, rgba(247,196,94,.7), transparent 60%), radial-gradient(circle at 60% 60%, rgba(70,240,255,.6), transparent 65%); }
+    .orb-b{ bottom:-220px; left:-240px; background: radial-gradient(circle at 30% 30%, rgba(77,124,255,.8), transparent 58%), radial-gradient(circle at 60% 60%, rgba(70,240,255,.45), transparent 65%); animation-duration: 12s; }
+    @keyframes floaty{
+      0%,100%{ transform: translate(0,0) scale(1); }
+      50%{ transform: translate(18px,-14px) scale(1.03); }
+    }
+
+    /* شريط علوي */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,18,.75), rgba(7,10,18,.35));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+    .logo{
+      width:40px; height:40px;
+      border-radius:14px;
+      background: linear-gradient(135deg, rgba(70,240,255,.28), rgba(77,124,255,.24));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo::after{
+      content:"";
+      position:absolute; inset:-30%;
+      background: conic-gradient(from 90deg, rgba(70,240,255,.0), rgba(70,240,255,.55), rgba(247,196,94,.55), rgba(77,124,255,.55), rgba(70,240,255,.0));
+      animation: spin 6s linear infinite;
+      opacity:.65;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg);} }
+
+    .brand h1{
+      font-size:16px;
+      margin:0;
+      letter-spacing:.2px;
+    }
+    .brand span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    .links{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-start;
+    }
+    .links a{
+      color:var(--text);
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid transparent;
+      transition: .25s ease;
+      font-size:13px;
+      opacity:.9;
+    }
+    .links a:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.12);
+      transform: translateY(-1px);
+      opacity:1;
+    }
+
+    .cta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, rgba(70,240,255,.16), rgba(77,124,255,.14));
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      transition:.25s ease;
+      font-weight:600;
+      font-size:13px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      position:relative;
+      overflow:hidden;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.20); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn::after{
+      content:"";
+      position:absolute;
+      inset:-120%;
+      background: radial-gradient(circle at 30% 30%, rgba(247,196,94,.22), transparent 55%),
+                  radial-gradient(circle at 70% 60%, rgba(70,240,255,.20), transparent 60%);
+      transform: rotate(18deg);
+      transition:.35s ease;
+      opacity:.9;
+    }
+    .btn:hover::after{ inset:-90%; opacity:1; }
+
+    .icon-btn{
+      width:42px; height:42px;
+      display:grid; place-items:center;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      cursor:pointer;
+      transition:.25s ease;
+      user-select:none;
+    }
+    .icon-btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
+    .hamburger{ display:none; }
+
+    /* الحاوية العامة */
+    .wrap{ position:relative; z-index:1; }
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 28px 18px 70px;
+    }
+
+    /* قسم الهيرو */
+    .hero{
+      padding: 38px 0 28px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:24px;
+      align-items:stretch;
+    }
+    .heroCard{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding: 26px;
+      position:relative;
+      overflow:hidden;
+      min-height: 260px;
+    }
+    .heroCard::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(700px 260px at 15% 0%, rgba(70,240,255,.22), transparent 55%),
+                  radial-gradient(640px 280px at 85% 15%, rgba(77,124,255,.22), transparent 58%);
+      opacity:.85;
+      pointer-events:none;
+    }
+    .heroCard > *{ position:relative; z-index:1; }
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      font-size:12px;
+      color:var(--muted);
+      width:fit-content;
+    }
+    .dot{
+      width:8px; height:8px;
+      border-radius:50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 6px rgba(70,240,255,.14);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ transform: scale(1); opacity:1; }
+      50%{ transform: scale(1.25); opacity:.85; }
+    }
+    .hero h2{
+      margin:14px 0 10px;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height:1.2;
+      letter-spacing:.3px;
+    }
+    .hero p{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.85;
+    }
+    .heroActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn.secondary{
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.12);
+      box-shadow:none;
+    }
+
+    .statCard{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+      min-height: 260px;
+    }
+    .statCard::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(360px 280px at 20% 10%, rgba(247,196,94,.22), transparent 60%),
+        radial-gradient(360px 280px at 80% 30%, rgba(70,240,255,.18), transparent 62%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .statCard > *{ position:relative; z-index:1; }
+    .miniGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top: 8px;
+    }
+    .mini{
+      padding:14px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      transition:.25s ease;
+    }
+    .mini:hover{ transform: translateY(-2px); background: rgba(0,0,0,.26); border-color: rgba(255,255,255,.16); }
+    .mini b{ display:block; font-size:13px; margin-bottom:6px; }
+    .mini span{ color:var(--muted); font-size:12.5px; line-height:1.6; display:block; }
+
+    /* الأقسام */
+    section{
+      margin-top: 22px;
+      padding-top: 18px;
+    }
+    .sectionTitle{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom: 14px;
+    }
+    .sectionTitle h3{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .sectionTitle p{
+      margin:0;
+      color: var(--muted);
+      font-size: 12.5px;
+      max-width: 520px;
+      line-height:1.7;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      grid-column: span 6;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      box-shadow: 0 18px 55px rgba(0,0,0,.42);
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+      transition: .28s ease;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(520px 180px at 15% 0%, rgba(70,240,255,.16), transparent 60%),
+                  radial-gradient(520px 180px at 85% 25%, rgba(77,124,255,.18), transparent 62%);
+      opacity:.75;
+      pointer-events:none;
+    }
+    .card > *{ position:relative; z-index:1; }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+    }
+
+    .aboutText{
+      grid-column: span 7;
+    }
+    .aboutSide{
+      grid-column: span 5;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.16);
+      width: fit-content;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .spark{
+      width:12px; height:12px;
+      border-radius:4px;
+      background: linear-gradient(135deg, rgba(247,196,94,.95), rgba(70,240,255,.85));
+      box-shadow: 0 0 0 6px rgba(247,196,94,.10);
+    }
+
+    .toolCard{
+      grid-column: span 12;
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .toolInfo h4{
+      margin:0 0 10px;
+      font-size: 18px;
+    }
+    .toolInfo p{
+      margin:0 0 14px;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 14px;
+    }
+    .toolList{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 6px;
+    }
+    .chip{
+      padding: 9px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      font-size: 12px;
+      color: var(--muted);
+      transition:.25s ease;
+      cursor: default;
+      user-select:none;
+    }
+    .chip:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); background: rgba(0,0,0,.24); }
+
+    .toolMedia{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      overflow:hidden;
+      position:relative;
+      min-height: 260px;
+    }
+    .toolMedia img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
+      transition: .35s ease;
+      filter: saturate(1.05) contrast(1.02);
+    }
+    .toolMedia:hover img{ transform: scale(1.06); }
+    .toolMedia .caption{
+      position:absolute;
+      inset:auto 12px 12px 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      color: rgba(234,242,255,.86);
+    }
+
+    /* تأثير ظهور عند التمرير */
+    .reveal{
+      opacity:0;
+      transform: translateY(16px);
+      transition: .6s cubic-bezier(.2,.8,.2,1);
+    }
+    .reveal.show{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    /* الفوتر */
+    footer{
+      margin-top: 26px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(12px);
+    }
+    .footerInner{
+      max-width: var(--max);
+      margin:0 auto;
+      padding: 18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+    .footerInner b{ color: rgba(234,242,255,.92); font-weight:700; }
+    .tinyLinks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .tinyLinks a{
+      color: rgba(234,242,255,.8);
+      text-decoration:none;
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      transition:.25s ease;
+    }
+    .tinyLinks a:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); }
+
+    /* شاشة الترحيب قبل الدخول */
+    .welcomeOverlay{
+      position:fixed;
+      inset:0;
+      z-index:100;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      background:
+        radial-gradient(900px 420px at 50% 0%, rgba(70,240,255,.14), transparent 60%),
+        radial-gradient(900px 420px at 50% 100%, rgba(77,124,255,.18), transparent 62%),
+        rgba(0,0,0,.70);
+      backdrop-filter: blur(14px);
+    }
+    .welcomeBox{
+      width:min(820px, 100%);
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow: 0 26px 90px rgba(0,0,0,.65);
+      overflow:hidden;
+      position:relative;
+    }
+    .welcomeTop{
+      padding: 22px 22px 16px;
+      position:relative;
+    }
+    .welcomeTop::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(560px 220px at 18% 0%, rgba(247,196,94,.22), transparent 60%),
+        radial-gradient(560px 240px at 85% 20%, rgba(70,240,255,.18), transparent 62%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .welcomeTop > *{ position:relative; z-index:1; }
+
+    .welcomeTitle{
+      margin:0 0 8px;
+      font-size: 20px;
+      letter-spacing:.2px;
+    }
+    .welcomeMsg{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 14px;
+      min-height: 56px;
+    }
+    .welcomeBottom{
+      padding: 16px 22px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+    .smallNote{
+      color: rgba(234,242,255,.72);
+      font-size: 12px;
+      line-height:1.7;
+    }
+
+    /* موبايل */
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .toolCard{ grid-template-columns: 1fr; }
+      .aboutText{ grid-column: span 12; }
+      .aboutSide{ grid-column: span 12; }
+      .card{ grid-column: span 12; }
+    }
+    @media (max-width: 760px){
+      .links{ display:none; }
+      .hamburger{ display:grid; }
+      .nav{ padding: 12px 14px; }
+      .heroCard{ padding: 20px; }
+      .statCard{ padding: 16px; }
+      .miniGrid{ grid-template-columns: 1fr; }
+    }
+
+    /* قائمة موبايل */
+    .mobileMenu{
+      display:none;
+      padding: 8px 14px 14px;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .mobileMenu.show{ display:block; }
+    .mobileMenu a{
+      display:block;
+      margin-top:8px;
+      text-decoration:none;
+      color: rgba(234,242,255,.90);
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      transition:.2s ease;
+    }
+    .mobileMenu a:hover{ background: rgba(255,255,255,.06); transform: translateY(-1px); }
+
+    /* زر رجوع للأعلى */
+    .toTop{
+      position:fixed;
+      left: 16px;
+      bottom: 16px;
+      z-index: 60;
+      width: 46px;
+      height: 46px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      color: rgba(234,242,255,.88);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+      opacity:0;
+      transform: translateY(10px);
+      pointer-events:none;
+      transition:.25s ease;
+      user-select:none;
+    }
+    .toTop.show{
+      opacity:1;
+      transform: translateY(0);
+      pointer-events:auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glow-orb orb-a"></div>
+  <div class="glow-orb orb-b"></div>
+
+  <!-- رسالة ترحيب قبل دخول الموقع -->
+  <div class="welcomeOverlay" id="welcomeOverlay" aria-modal="true" role="dialog">
+    <div class="welcomeBox">
+      <div class="welcomeTop">
+        <h2 class="welcomeTitle">مرحباً بك في موقع باندا التقني 🐼</h2>
+        <p class="welcomeMsg" id="welcomeMsg"></p>
+      </div>
+      <div class="welcomeBottom">
+        <div class="smallNote">اضغط دخول لبدء التصفح</div>
+        <button class="btn" id="enterBtn">دخول الموقع</button>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>موقع باندا التقني</h1>
+          <span>حلول برمجية وأدوات عملية</span>
+        </div>
+      </div>
+
+      <nav class="links" aria-label="روابط">
+        <a href="#home">الرئيسية</a>
+        <a href="#about">عن الموقع</a>
+        <a href="#tools">الأدوات</a>
+        <a href="#contact">التواصل</a>
+      </nav>
+
+      <div class="cta">
+        <button class="icon-btn hamburger" id="menuBtn" aria-label="فتح القائمة">
+          ☰
+        </button>
+        <button class="btn secondary" onclick="document.querySelector('#tools').scrollIntoView({behavior:'smooth'})">
+          استعرض الأدوات
+        </button>
+      </div>
+    </div>
+
+    <div class="mobileMenu" id="mobileMenu">
+      <a href="#home">الرئيسية</a>
+      <a href="#about">عن الموقع</a>
+      <a href="#tools">الأدوات</a>
+      <a href="#contact">التواصل</a>
+    </div>
+  </header>
+
+  <button class="toTop" id="toTop" aria-label="الرجوع للأعلى">↑</button>
+
+  <main class="wrap" id="home">
+    <div class="container">
+      <!-- HERO -->
+      <div class="hero">
+        <div class="heroCard reveal">
+          <div class="kicker"><span class="dot"></span> منصة مرتبة وبسيطة تساعدك تنجز</div>
+          <h2>باندا التقني: حلول برمجية وأدوات تُرتب شغلك</h2>
+          <p>
+            هنا نعرض أدوات وبرمجيات مفيدة، مع شرح واضح ومظهر أنيق ومتناسق.
+            هدفنا إن الموقع يكون سريع، جميل، ومتحرك بشكل لطيف بدون تعقيد.
+          </p>
+          <div class="heroActions">
+            <button class="btn" onclick="document.querySelector('#about').scrollIntoView({behavior:'smooth'})">عن الموقع</button>
+            <button class="btn secondary" onclick="document.querySelector('#tools').scrollIntoView({behavior:'smooth'})">قسم الأدوات</button>
+          </div>
+        </div>
+
+        <div class="statCard reveal">
+          <div class="badge"><span class="spark"></span> لمحة سريعة</div>
+          <div class="miniGrid">
+            <div class="mini">
+              <b>واجهة متناسقة</b>
+              <span>تصميم هادئ، حواف ناعمة، وعمق بصري.</span>
+            </div>
+            <div class="mini">
+              <b>حركة أنيقة</b>
+              <span>انتقالات لطيفة وظهور تدريجي عند التمرير.</span>
+            </div>
+            <div class="mini">
+              <b>تجربة متفاعلة</b>
+              <span>قائمة موبايل، زر رجوع، وتفاصيل دقيقة.</span>
+            </div>
+            <div class="mini">
+              <b>استجابة كاملة</b>
+              <span>مرتب على الجوال والكمبيوتر.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <section id="about" class="reveal">
+        <div class="sectionTitle">
+          <h3>عن الموقع</h3>
+          <p>نبذة مختصرة وواضحة عن توجهنا والخدمات اللي نقدمها.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card aboutText">
+            <div class="badge"><span class="spark"></span> من نحن</div>
+            <h4 style="margin:12px 0 10px; font-size:18px;">موقع باندا التقني</h4>
+            <p style="margin:0; color:var(--muted); line-height:1.95; font-size:14.5px;">
+              نقدم حلول برمجية و أدوات برمجية تساعدك تحسن أداء جهازك وتنظم إعداداتك وتختصر وقتك.
+              نركز على تقديم محتوى مرتب، وتجربة استخدام مريحة، وتصميم متناسق يخلّي الوصول للمعلومة سهل.
+            </p>
+          </div>
+
+          <div class="aboutSide">
+            <div class="card">
+              <div class="badge"><span class="spark"></span> ماذا نقدم</div>
+              <p style="margin:12px 0 0; color:var(--muted); line-height:1.9; font-size:14px;">
+                حلول برمجية، أدوات مساعدة، تحسينات إعدادات، ونصائح عملية بأسلوب مختصر.
+              </p>
+            </div>
+            <div class="card">
+              <div class="badge"><span class="spark"></span> أسلوبنا</div>
+              <p style="margin:12px 0 0; color:var(--muted); line-height:1.9; font-size:14px;">
+                بساطة، ترتيب، واهتمام بالتفاصيل. نحب الواجهة تكون مريحة للعين وسريعة في التصفح.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOOLS -->
+      <section id="tools" class="reveal">
+        <div class="sectionTitle">
+          <h3>الأدوات</h3>
+          <p>هنا نعرض الأدوات اللي نقدمها بشكل منظم مع وصف مبسط وصورة.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card toolCard">
+            <div class="toolInfo">
+              <div class="badge"><span class="spark"></span> أداة مميزة</div>
+              <h4>باندا تويك (Panda Tweak)</h4>
+              <p>
+                باندا تويك هي أداة تحسين وإعدادات تساعدك تضبط بعض خيارات النظام والأداء بطريقة واضحة وسريعة.
+                فكرتها إنها تجمع لك أهم التعديلات الشائعة في مكان واحد، مع تنبيه إن الاستخدام يكون بحذر وعلى مسؤوليتك.
+                مناسبة للي يحب يختصر خطوات كثيرة ويخلّي الإعدادات مرتبة وسهلة. رمز دخول الاداة 123321 
+              </p>
+
+              <div class="toolList">
+                <span class="chip">واجهة بسيطة</span>
+                <span class="chip">تجميع إعدادات</span>
+                <span class="chip">تجربة سريعة</span>
+                <span class="chip">تنظيم أفضل</span>
+              </div>
+
+              <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn" id="toolFocusBtn">إظهار تفاصيل الأداة</button>
+                <button class="btn secondary" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">تواصل معنا</button>
+              </div>
+            </div>
+
+            <div class="toolMedia" id="toolMedia">
+              <img src="panda-tweak.png" alt="صورة أداة باندا تويك" />
+              <div class="caption">صورة توضيحية للأداة داخل القسم</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="reveal">
+        <div class="sectionTitle">
+          <h3>التواصل</h3>
+          <p>قسم بسيط للتواصل وتأكيد هوية إدارة الموقع.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card" style="grid-column: span 12;">
+            <div class="badge"><span class="spark"></span> إدارة الموقع</div>
+            <p style="margin:12px 0 0; color:var(--muted); line-height:1.9; font-size:14.5px;">
+              يتم إدارة الموقع الإلكتروني بواسطة <b style="color:rgba(234,242,255,.92)">استديوهات باندا</b>.
+            </p>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn secondary" onclick="alert('شكراً لتواصلك ✨\\n(ضع هنا وسائل التواصل لاحقاً)')">وسائل التواصل</button>
+              <button class="btn" onclick="alert('تم! سنضيف المزيد قريباً 🐼')">متابعة التحديثات</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footerInner">
+      <div>© <span id="year"></span> <b>موقع باندا التقني</b> | يتم إدارة الموقع الإلكتروني بواسطة <b>استديوهات باندا</b></div>
+      <div class="tinyLinks">
+        <a href="#home">الرئيسية</a>
+        <a href="#about">عن الموقع</a>
+        <a href="#tools">الأدوات</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // سنة الفوتر
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // قائمة الموبايل
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn?.addEventListener("click", () => {
+      mobileMenu.classList.toggle("show");
+      menuBtn.textContent = mobileMenu.classList.contains("show") ? "✕" : "☰";
+    });
+
+    // إغلاق القائمة عند الضغط على رابط
+    mobileMenu?.querySelectorAll("a").forEach(a=>{
+      a.addEventListener("click", ()=>{
+        mobileMenu.classList.remove("show");
+        menuBtn.textContent = "☰";
+      });
+    });
+
+    // زر للأعلى
+    const toTop = document.getElementById("toTop");
+    window.addEventListener("scroll", () => {
+      const show = window.scrollY > 420;
+      toTop.classList.toggle("show", show);
+    });
+    toTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+
+    // تأثير الظهور عند التمرير
+    const revealEls = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add("show");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+
+    // شاشة الترحيب (قبل الدخول)
+    const welcomeOverlay = document.getElementById("welcomeOverlay");
+    const welcomeMsg = document.getElementById("welcomeMsg");
+    const enterBtn = document.getElementById("enterBtn");
+
+    const messageText =
+      "نورت موقع باندا التقني! هنا بتلقى حلول برمجية وأدوات مفيدة بشكل مرتب. " +
+      "استمتع بالتصفح، وإذا حبيت تشوف الأدوات مباشرة، ادخل وابدأ ✨";
+
+    // كتابة تدريجية للرسالة
+    let i = 0;
+    function typeIt(){
+      if(!welcomeMsg) return;
+      welcomeMsg.textContent = messageText.slice(0, i);
+      i++;
+      if(i <= messageText.length) requestAnimationFrame(typeIt);
+    }
+    typeIt();
+
+    function enterSite(){
+      welcomeOverlay.style.opacity = "0";
+      welcomeOverlay.style.transform = "scale(1.01)";
+      welcomeOverlay.style.transition = "opacity .35s ease, transform .35s ease";
+      setTimeout(()=> welcomeOverlay.style.display = "none", 360);
+      document.body.style.overflowY = "auto";
+    }
+
+    // منع التمرير قبل الدخول
+    document.body.style.overflowY = "hidden";
+
+    enterBtn.addEventListener("click", enterSite);
+
+    // تفاعل بسيط: زر يركز على صورة الأداة
+    const toolFocusBtn = document.getElementById("toolFocusBtn");
+    const toolMedia = document.getElementById("toolMedia");
+    toolFocusBtn?.addEventListener("click", ()=>{
+      toolMedia.scrollIntoView({behavior:"smooth", block:"center"});
+      toolMedia.animate([
+        { transform: "scale(1)", filter: "brightness(1)" },
+        { transform: "scale(1.02)", filter: "brightness(1.06)" },
+        { transform: "scale(1)", filter: "brightness(1)" }
+      ], { duration: 520, easing: "cubic-bezier(.2,.8,.2,1)" });
+    });
+
+    // تفاعل خفيف مع حركة الماوس (عمق بسيط على الهيرو)
+    const heroCard = document.querySelector(".heroCard");
+    if(heroCard){
+      heroCard.addEventListener("mousemove", (e)=>{
+        const r = heroCard.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        heroCard.style.transform = `translateY(-2px) rotateX(${(-y*3).toFixed(2)}deg) rotateY(${(x*3).toFixed(2)}deg)`;
+      });
+      heroCard.addEventListener("mouseleave", ()=>{
+        heroCard.style.transform = "translateY(0) rotateX(0) rotateY(0)";
+      });
+    }
+// زر "تواصل معنا" يفتح الانستا
+const instaUrl = "https://www.instagram.com/pandastudio.tech/";
+document.querySelectorAll("button").forEach(btn => {
+  if ((btn.textContent || "").trim() === "تواصل معنا") {
+    btn.onclick = () => window.open(instaUrl, "_blank");
+  }
+});
+
+// إضافة زر تحميل الأداة
+const toolActions = document.querySelector(".toolInfo div[style*='margin-top:14px']");
+if (toolActions) {
+  const a = document.createElement("a");
+  a.href = "PandaTweak.zip";
+  a.download = "";
+  a.className = "btn";
+  a.textContent = "تحميل الأداة";
+  a.style.textDecoration = "none";
+  a.style.display = "inline-flex";
+  a.style.alignItems = "center";
+  a.style.justifyContent = "center";
+  toolActions.appendChild(a);
+}
+// ====== مؤثرات إضافية للأزرار (الصقها قبل </script>) ======
+
+  </script>
+</body>
+</html>
